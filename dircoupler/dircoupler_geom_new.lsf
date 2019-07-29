@@ -1,0 +1,14 @@
+# We assume that contours{} is set, four different variables working up from bottom to top.
+# Each contour is 100 (or so) points, working left to right. They are already in meters and absolute position.
+# The left edge is -1.5e-6, the right edge +1.5e-6. The endpoints must not be adjusted.
+# The y positions for the starts: -0.6e-6, -0.1e-6, 0.1e-6, 0.6e-6.
+
+switchtolayout;
+
+verts_bottom = [bot_out ; flip(bot_in,1)];
+verts_top = [top_in ; flip(top_out,1)];
+
+select("coupler::couple_top_wiggle");
+set("vertices",verts_top);
+select("coupler::couple_bottom_wiggle");
+set("vertices",verts_bottom);

@@ -1,0 +1,30 @@
+In order for these adjoint scripts to work, there must be some constant conventions across the MATLAB scripts, the .LSF script files, and the .LMS project files. So.
+
+The LMS file must have:
+- global source settings which run from 1.5um to 1.6um in wavelength
+- global monitor settings which use source limits and have 9 frequency points
+- a linear source called source_in at the input
+- if one output: a source called source_out at the output.
+- if two outputs: sources called source_lo and source_hi at the outputs.
+- Every source is associated with a frequency monitor and a mode expansion monitor.
+-- The monitors are called things like "monitor_in" and "mode_in".
+-- The monitors are on "nearest mesh cell" interpolation.
+-- There is an 0.01um mesh override located at exactly the monitor's location.
+-- The mode expansion monitor has "in" as its nickname for "monitor_in".
+-- The mode expansion monitor is on top of the frequency monitor, but the source is behind it by at least 0.3um.
+---- The two locations must have identical cross-sections.
+- There is a horizontal effective index monitor called monitor_idx.
+- There is a horizontal field monitor called monitor_field, with interpolation set to "nearest mesh cell".
+- The horizontal monitors have identical geometric extents, inside the varFDTD region.
+
+There must be a config struct, passed to the run_adjoint or run_forward scripts, containing:
+- C_OUTS and a cell outs_names{C_OUTS}, which contains suffixes to monitor handles in the LMS file.
+- C_CONTS and a cell cont_names{C_CONTS}, which contains variable names for contours that will be appputvar'ed.
+- geom_script and fwd_script (and maybe adj_script), which are names of script files.
+- All strings must be char('').
+
+The geometry script must use the variables in cont_names and apply them to the geometry.
+
+The forward script is likely to be run_forward or run_double_forward, which should work so long as outs_names are {'out'} or {'lo', 'hi'}.
+
+It's custom for the config struct, as initialized by an init() script, to also contain a baseconts{C_CONTS}.

@@ -1,0 +1,67 @@
+switchtolayout;
+
+select("source_in");
+set("enabled",true);
+select("source_lo");
+set("enabled",false);
+select("source_hi");
+set("enabled",false);
+
+run;
+
+mode_in_in = getresult("mode_in","expansion for in");
+mode_in_lo = getresult("mode_lo","expansion for lo");
+mode_in_hi = getresult("mode_hi","expansion for hi");
+E_in = getresult("monitor_field","E");
+index = getresult("monitor_idx","index");
+
+S_lo = mode_in_lo.a / mode_in_in.a;
+S_hi = mode_in_hi.a / mode_in_in.a;
+
+switchtolayout;
+
+select("source_in");
+set("enabled",false);
+select("source_lo");
+set("enabled",true);
+select("source_hi");
+set("enabled",false);
+
+run;
+
+mode_lo_in = getresult("mode_in","expansion for in");
+mode_lo_lo = getresult("mode_lo","expansion for lo");
+mode_lo_hi = getresult("mode_hi","expansion for hi");
+E_lo = getresult("monitor_field","E");
+
+switchtolayout;
+
+select("source_in");
+set("enabled",false);
+select("source_lo");
+set("enabled",false);
+select("source_hi");
+set("enabled",true);
+
+run;
+
+mode_hi_in = getresult("mode_in","expansion for in");
+mode_hi_lo = getresult("mode_lo","expansion for lo");
+mode_hi_hi = getresult("mode_hi","expansion for hi");
+E_hi = getresult("monitor_field","E");
+
+# now we turn the structs into answers because asd;flkjsldk
+
+Edat_in = E_in.E;
+Edat_lo = E_lo.E;
+Edat_hi = E_hi.E;
+matlabsave("Epass.mat",Edat_in,Edat_lo,Edat_hi);
+xs = E_in.x;
+ys = E_in.y;
+freqs = E_in.f;
+index_x = index.index_x;
+index_y = index.index_y;
+N_lo = mode_in_lo.N;
+N_hi = mode_in_hi.N;
+adjust_lo = mode_in_in.a * mode_lo_lo.b;
+adjust_hi = mode_in_in.a * mode_hi_hi.b;

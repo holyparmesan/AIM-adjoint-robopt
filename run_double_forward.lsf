@@ -1,0 +1,18 @@
+switchtolayout;
+
+select("source_in");
+set("enabled",true);
+select("source_lo");
+set("enabled",false);
+select("source_hi");
+set("enabled",false);
+
+run;
+
+mode_in_in = getresult("mode_in","expansion for in");
+mode_in_lo = getresult("mode_lo","expansion for lo");
+mode_in_hi = getresult("mode_hi","expansion for hi");
+
+S_lo = mode_in_lo.a / mode_in_in.a;
+S_hi = mode_in_hi.a / mode_in_in.a;
+freqs = mode_in_lo.f;

@@ -1,0 +1,40 @@
+switchtolayout;
+
+select("source_in");
+set("enabled",true);
+select("source_out");
+set("enabled",false);
+
+run;
+
+mode_in_in = getresult("mode_in","expansion for in");
+mode_in_out = getresult("mode_out","expansion for out");
+E_in = getresult("monitor_field","E");
+index = getresult("monitor_idx","index");
+S_out = mode_in_out.a / mode_in_in.a;
+
+switchtolayout;
+
+select("source_in");
+set("enabled",false);
+select("source_out");
+set("enabled",true);
+
+run;
+
+mode_out_in = getresult("mode_in","expansion for in");
+mode_out_out = getresult("mode_out","expansion for out");
+E_out = getresult("monitor_field","E");
+
+# now we turn the structs into answers because asd;flkjsldk
+
+Edat_in = E_in.E;
+Edat_out = E_out.E;
+matlabsave("Epass.mat",Edat_in,Edat_out);
+xs = E_in.x;
+ys = E_in.y;
+freqs = E_in.f;
+index_x = index.index_x;
+index_y = index.index_y;
+N_out = mode_in_out.N;
+adjust_out = mode_in_in.a * mode_out_out.b;

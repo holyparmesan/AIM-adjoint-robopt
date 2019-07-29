@@ -1,0 +1,11 @@
+switchtolayout;
+
+N = size(bot_in,1);
+scale_um = 0.1;
+vertx = [linspace(0,3,N) ; linspace(3,0,N)];
+verty_b = [scale_um * -1 * bot_out ; scale_um * flip(bot_in,1) + 0.5];
+verty_t = [scale_um * -1 * top_in ; scale_um * flip(top_out,1) + 0.5];
+select("coupler::couple_top_wiggle");
+set("vertices",[vertx, verty_t] * 1e-6);
+select("coupler::couple_bottom_wiggle");
+set("vertices",[vertx, verty_b] * 1e-6);

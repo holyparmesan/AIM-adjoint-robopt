@@ -1,0 +1,7 @@
+# we assume bot_out, bot_in, top_in, and top_out are loaded.
+
+switchtolayout;
+
+verts = [bot_out ; flip(bot_in, 1) ; top_in ; flip(top_out, 1)];
+select("Splitter");
+set("vertices",verts);

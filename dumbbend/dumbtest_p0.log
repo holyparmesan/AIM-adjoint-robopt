@@ -1,0 +1,62 @@
+MODE Solutions Version 7.12.1661 (Linux 64bit)
+ expires (month/day/year): 8/19/2019
+using config file: /homes/sadun/.config/Lumerical/MODE Solutions.ini
+license host: <a href=http://mtl-licsrv1:8095>mtl-licsrv1:8095</a>
+current time: Thu Mar  7 13:10:34 2019
+Running on host: dfm2
+All processes are communicating and ready to proceed to simulation...
+Running lms file: /u/lumerical/mode/7.12.1661-1/bin/varfdtd-engine-mpich2nem -t 1 -remote /homes/sadun/workspace/adjoint/dumbbend/dumbtest.lms
+number of processors is 16
+processors are distributed as: 4x4x1
+Running TE Simulation
+Starting meshing
+Simulation size in gridpoints: 137 x 74 x 1
+Refined 0 mesh cells (0%)
+Completed meshing!
+Meshing complete in 0.18 seconds of CPU time
+0 0
+Starting meshing
+Simulation size in gridpoints: 137 x 74 x 1
+Refined 0 mesh cells (0%)
+Completed meshing!
+Meshing complete in 0.18 seconds of CPU time
+0 0
+finished material properties
+Selected kernel with optimization level: 0 and split-field propagation direction: 0
+-----------------------------------------
+Beginning initialization of TE Simulation
+Starting to add sources to simulation
+Adding TE Mode Source propagating in X
+Starting to add boundary conditions to simulation
+Adding TE PML BC
+Adding TE parallel BC
+Adding TE PML BC
+Adding TE parallel BC
+Starting to add monitors to Simulation
+Adding analysis monitor
+Adding TE DFT monitor
+Adding TE index monitor
+Adding TE DFT monitor
+Adding TE DFT monitor
+Finished initialization of TE Simulation
+-----------------------------------------
+All processes are communicating and ready to proceed to simulation...
+Starting 110743 total iterations
+0% complete. Max time remaining: 35 secs. Auto Shutoff: 1
+2% complete. Max time remaining: 27 secs. Auto Shutoff: 1
+4% complete. Max time remaining: 26 secs. Auto Shutoff: 1
+7% complete. Max time remaining: 25 secs. Auto Shutoff: 1
+9% complete. Max time remaining: 25 secs. Auto Shutoff: 8.94867e-06
+Early termination of simulation, the autoshutoff criteria are satisfied.
+Completed 10017 iterations, or 2.71357e-13s of Simulation Time
+Process 0 starting to collect data
+    collecting monitor data
+    collecting source data
+Finished collecting data
+Simulation completed successfully at: Thu Mar  7 13:10:39 2019
+Overall wall time measurements in seconds:
+    time to mesh and initialize: 2
+    time to run FDTD simulation: 2
+    time to finalize data and save to files: 1
+    FDTD solver speed: 50.7762 Mnodes/s
+    total FDTD solver speed on 16 processes: 812.419 Mnodes/s

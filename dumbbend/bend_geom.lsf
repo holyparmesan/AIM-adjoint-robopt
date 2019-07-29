@@ -1,0 +1,7 @@
+# we assume bot and top are loaded.
+
+switchtolayout;
+
+verts = [bot ; flip(top, 1)];
+select("wg_bend");
+set("vertices",verts);

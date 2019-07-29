@@ -1,0 +1,7 @@
+# we assume bot and top are loaded.
+
+switchtolayout;
+
+verts = [r_out ; flip(r_in, 1)];
+select("ring_poly");
+set("vertices",verts);
