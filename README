@@ -1,8 +1,49 @@
+The broad structure of this repository is that geometry-generic scripts, including most of the code necessary to run the adjoint method, are in the top-level directory, and that the individual device geometries each have their own directory with .LMS project files, .m init files, .LSF files to update the geometry, and more likely than not some other .m files to run specific tests. Robust optimization is done slightly differently for each device - the most up-to-date code is in ybranch_2arms.
+
+-- Top-level directory files --
+
+Part of the adjoint method:
+- adjCalc.m: Given electric field and index information, calculates adjoint sensitivities. Uses interpolation.
+- adjCalcFIT.m: Same as above, but uses a local linear fit. Performed worse when I tried it.
+
+- run_double_adjoint.lsf / run_adjoint.lsf: Lumerical script files which run forward and backward simulations, and store field monitor values in specific variables. (Single for one-output, double for two-outputs.) Only works with projects whose monitors and sources are named according to custom.
+- run_adjoint.m: Given a set of geometry contours and a geometry config struct, runs an adjoint simulation for geometry set by those contours, and returns an adjoint results struct with sensitivities along those contours.
+- run_adjes.m: Runs run_adjoint.m repeatedly for a bunch of different fluctuations of the same geometry.
+
+- run_forward.m: Given a set of geometry contours and a geometry config struct, runs a forward simulation for geometry set by those contours.
+- run_double_forward.lsf / run_forward.lsf: Lumerical script files which run forward simulations, and store S parameter results in specific variables. (Single for one-output, double for two-outputs.) Only works with projects whose monitors and sources are named according to custom.
+- run_fwds.m: Runs run_forward.m repeatedly for a bunch of different fluctuations of the same geometry.
+
+- delt_norm.m / delts_norms.m: Takes a contour/contours, returns tangent and normal vectors that are orthogonal to it/them.
+
+Utilities for robust optimization:
+- robustLinprog.m: Given a set of function values f_i(x0) and gradients df_i/dx(x0), and limits on how far x can travel, returns the value of x which minimaxes {f_i}.
+- robustLinprog_deltas.m: Same, but now x can be constrained to not change too much between adjacent coordinates.
+- randomRoughness.m: Given a contour, a correlation length, and a # of fluctuations to produce, produces random fluctuations along that contour.
+
+Analysis scripts:
+- analyze_adjScripts.m / _reindex / preddelts: Takes results that came from finite difference simulations and assembles prediction matrices. Different scripts predict slightly different things and assume slightly different experiment formatting.
+- errfigmaker.m: Takes a particular format of finite-difference prediction matrix and makes a figure describing its errors.
+- integrate.m: Utility function for adding up the expected change in an S parameter along a contour.
+
+- adjFigMaker.m: Makes a heatmap of adjoint sensitivities.
+- diverging_map.m: Colormap script, taken from the Internet, used for figure generation.
+
+Other / deprecated:
+- adjCalcStruct.m / adjCalcUnscaled.m: older versions of adjCalc with different input options / formats.
+- adjointMapper.m: an old version of run_adjoint, I think
+- makeProfiles.m / makeProfilesAlt: holdovers from when I was doing directional coupler experiments.
+- profsToSamps.m: if you want to run finite difference experiments on different magnitudes of the same perturbation profile, this utility helps do that multiplication.
+- unFlattenData.m: for an older version of the adjoint method which required field arrays to be reshuffled.
+- run_adjoint_test.m: a test script to compare adjCalc and adjCalcFIT.
+
+---------
+
 In order for these adjoint scripts to work, there must be some constant conventions across the MATLAB scripts, the .LSF script files, and the .LMS project files. So.
 
 The LMS file must have:
 - global source settings which run from 1.5um to 1.6um in wavelength
-- global monitor settings which use source limits and have 9 frequency points
+- global monitor settings which use source limits (some scripts require 9 frequency points)
 - a linear source called source_in at the input
 - if one output: a source called source_out at the output.
 - if two outputs: sources called source_lo and source_hi at the outputs.
